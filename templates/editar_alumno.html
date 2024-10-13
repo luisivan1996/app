@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Alumno{% endblock %}
+
+{% block content %}
+<h2>Editar Alumno</h2>
+<form method="POST" action="/alumnos/editar/{{ alumno[0] }}">
+    <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" value="{{ alumno[1] }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="apellido" class="form-label">Apellido</label>
+        <input type="text" class="form-control" id="apellido" name="apellido" value="{{ alumno[2] }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="cedula" class="form-label">Cédula</label>
+        <input type="text" class="form-control" id="cedula" name="cedula" value="{{ alumno[3] }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
+        <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ alumno[4] }}" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Actualizar</button>
+    <a href="/alumnos" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends "dashboard.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mt-4">Reportes de Estudiantes</h1>
+    
+    <form id="searchForm">
+        <div class="form-group">
+            <label for="searchInput">Buscar Estudiante:</label>
+            <input type="text" class="form-control" id="searchInput" placeholder="Nombre o cédula">
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+
+    <h2 class="mt-4">Resultados de la Búsqueda</h2>
+    <table class="table table-striped" id="resultsTable">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Cédula</th>
+                <th>Fecha de Nacimiento</th>
+            </tr>
+        </thead>
+        <tbody id="resultsBody">
+            <!-- Aquí se llenarán los resultados -->
+        </tbody>
+    </table>
+
+    <button class="btn btn-primary" id="exportCSV">Exportar a CSV</button>
+    <button class="btn btn-success" id="exportXLSX">Exportar a XLSX</button>
+    <button class="btn btn-danger" id="exportPDF">Exportar a PDF</button>
+    <button class="btn btn-info" id="exportJSON">Exportar a JSON</button>
+    <button class="btn btn-secondary" id="exportXML">Exportar a XML</button>
+</div>
+
+<script>
+document.getElementById("searchForm").onsubmit = async function(e) {
+    e.preventDefault();
+    const searchTerm = document.getElementById("searchInput").value;
+
+    // Llamar a la API para buscar estudiantes
+    const response = await fetch(`/buscar_estudiantes?term=${searchTerm}`);
+    const estudiantes = await response.json();
+
+    // Actualizar la tabla con los resultados
+    const resultsBody = document.getElementById("resultsBody");
+    resultsBody.innerHTML = "";
+    estudiantes.forEach(estudiante => {
+        resultsBody.innerHTML += `
+            <tr>
+                <td>${estudiante.nombre}</td>
+                <td>${estudiante.apellido}</td>
+                <td>${estudiante.cedula}</td>
+                <td>${new Date(estudiante.fecha_nacimiento).toLocaleDateString()}</td>
+            </tr>
+        `;
+    });
+};
+</script>
+
+<script>
+    document.getElementById("exportCSV").onclick = function() {
+        const term = document.getElementById("searchInput").value;
+        window.location.href = `/export/csv?term=${term}`;
+    };
+    
+    document.getElementById("exportXLSX").onclick = function() {
+    const term = document.getElementById("searchInput").value;
+    window.location.href = `/export/xlsx?term=${term}`;
+};
+
+document.getElementById("exportPDF").onclick = function() {
+    const term = document.getElementById("searchInput").value;
+    window.location.href = `/export/pdf?term=${term}`;
+};
+
+document.getElementById("exportJSON").onclick = function() {
+    const term = document.getElementById("searchInput").value;
+    window.location.href = `/export/json?term=${term}`;
+};
+
+document.getElementById("exportXML").onclick = function() {
+    const term = document.getElementById("searchInput").value;
+    window.location.href = `/export/xml?term=${term}`;
+};
+    </script>
+    
+{% endblock %}

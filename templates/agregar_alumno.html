@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Agregar Alumno{% endblock %}
+
+{% block content %}
+<h2>Agregar Alumno</h2>
+<form method="POST" action="/alumnos/agregar">
+    <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" required>
+    </div>
+    <div class="mb-3">
+        <label for="apellido" class="form-label">Apellido</label>
+        <input type="text" class="form-control" id="apellido" name="apellido" required>
+    </div>
+    <div class="mb-3">
+        <label for="cedula" class="form-label">Cédula</label>
+        <input type="text" class="form-control" id="cedula" name="cedula" required>
+    </div>
+    <div class="mb-3">
+        <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
+        <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Agregar</button>
+    <a href="/alumnos" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}
